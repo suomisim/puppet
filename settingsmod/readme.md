@@ -28,8 +28,8 @@ Talteen päätettiin ottaa käynnistysvalikon asetustiedosto whiskermenu-1.rc ja
 Harjoituksessa luotiin Puppet-moduuli settings, joka siirtää asetustiedostot oikeaan paikkaan ja näin asettaa asetukset voimaan.
 
 	$ cd
-	$ mkdir settings
-	$ cd settings
+	$ mkdir settingsmod
+	$ cd settingsmod
 	$ mkdir manifests
 	$ mkdir templates
 	$ cd manifests
@@ -37,15 +37,15 @@ Harjoituksessa luotiin Puppet-moduuli settings, joka siirtää asetustiedostot o
 
 init.pp -tiedostoon kirjattiin seuraava pätkä koodia:
 
-	class settings {
+	class settingsmod {
 
         	file {'/home/suomisim/.config/xfce4/panel/whiskermenu-1.rc':
-                content => template('settings/whiskermenu-1.rc.erb')
+                content => template('settingsmod/whiskermenu-1.rc.erb')
 
         	}
 
         	file {'/home/suomisim/.config/xfce4/terminal/terminalrc':
-                content => template('settings/terminalrc.erb')
+                content => template('settingsmod/terminalrc.erb')
 
         	}
 
@@ -54,16 +54,18 @@ init.pp -tiedostoon kirjattiin seuraava pätkä koodia:
 
 Seuraavaksi kopioitiin asetustiedostot template-kansioon oikeassa muodossa (.erb)
 
-	cp terminalrc /home/suomisim/puppet/settings/templates/terminalrc.erb
-	cp whiskermenu-1.rc /home/suomisim/puppet/settings/templates/whiskermenu-1.rc.erb
+	cp terminalrc /home/suomisim/puppet/settingsmod/templates/terminalrc.erb
+	cp whiskermenu-1.rc /home/suomisim/puppet/settingsmod/templates/whiskermenu-1.rc.erb
 
-Lopuksi testattiin moduulia livetikun kanssa, käyttöjärjestelmänä Xubuntu 16.04 LTS. Ensin tallennettiin 
-luotu moduuli Githubiin.
+Lopuksi kopioitiin moduuli /etc/puppet/modules -kansioon. Ennen moduulin ajamista muokattiin komentokehotteen
+ja käynnistysvalikon asetuksia, jotta nähtäisiin että asetukset muuttuvat takaisin. Komentokehotteen kokoa
+muutettiin pienemmäksi (Preferences -> Appearance -> Default geometrics) ja käynnistysvalikosta Favourites
+-pikakuvakkeista poistettiin pari kuvaketta. Seuraavaksi ajettiin moduuli komennolla:
 
-	git stage .
-	git commit (kommentiksi Improve settings module)
-	git pull (vedä aina ennen työntöä)
-	git push
+	$ sudo puppet apply -e 'class {"settingsmod":}'
+
+
+
 
  
 
