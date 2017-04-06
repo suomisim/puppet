@@ -1,12 +1,12 @@
-class settings {
+class settingsmod {
 
 	file {'/home/suomisim/.config/xfce4/panel/whiskermenu-1.rc':
-		content => template('settings/whiskermenu-1.rc.erb')
+		content => template('settingsmod/whiskermenu-1.rc.erb')
 
 	}
 
 	file {'/home/suomisim/.config/xfce4/terminal/terminalrc':
-		content => template('settings/terminalrc.erb')
+		content => template('settingsmod/terminalrc.erb')
 
 	}
 
