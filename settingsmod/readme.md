@@ -34,7 +34,7 @@ Tehtävä alotettiin ottamalla käyttöön käyttäjän Github-varasto Puppet-mo
 
 Pikaisen googletuksen perusteella Xfce4 työpöydän ja käynnistysvalikon asetukset löytyivät polulta /home/<user>/.config/xfce4/
 Talteen päätettiin ottaa käynnistysvalikon asetustiedosto whiskermenu-1.rc ja komentokehotteen asetustiedosto terminalrc.
-Harjoituksessa luotiin Puppet-moduuli settings, joka siirtää asetustiedostot oikeaan paikkaan ja näin asettaa asetukset voimaan.
+Harjoituksessa luotiin Puppet-moduuli settingsmod, joka siirtää asetustiedostot oikeaan paikkaan ja näin asettaa asetukset voimaan.
 
 	$ cd
 	$ mkdir settingsmod
