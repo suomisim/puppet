@@ -1,7 +1,10 @@
 #!/bin/bash
 
 printf "Select a module to run:\n"
-select d in /etc/puppet/modules/*; do test -n "$d" && break; echo ">>> Invalid Selection"; done
+
+cd /etc/puppet/modules/
+select d in *; do test -n "$d" && break; echo ">>> Invalid Selection"; done
 
 echo "$d"
 
+puppet apply -e 'class {'"$d"':}'

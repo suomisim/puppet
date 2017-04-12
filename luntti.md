@@ -14,8 +14,9 @@ terokarvinen dconf
 
 ublock origin viime kurssi tietoista (debian)
 
-git stage -> git add
+git stage . -> git add .
 
 sudo chown -R suomisim *
+
 
 
