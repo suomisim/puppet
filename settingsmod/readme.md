@@ -25,7 +25,7 @@ Harjoitustyössä hyödynnettiin Git -versionhallintaa, joten työskentelykansio
 Näin ollen moduulit luotiin ja niitä muokattiin ilman sudo-oikeuksia. Ennen moduulien testausta ne siirrettiin
 /etc/puppet/modules/ -kansioon ja ajettiin sudo-oikeuksilla.
 
-Tehtävä alotettiin ottamalla käyttöön käyttäjän Github-varasto Puppet-moduuleille:
+Tehtävä alotettiin ottamalla käyttöön käyttäjän aihemmin luotu Github-varasto Puppet-moduuleille:
 
 	$ git clone https://github.com/suomisim/puppet
 
@@ -35,7 +35,8 @@ Tehtävä alotettiin ottamalla käyttöön käyttäjän Github-varasto Puppet-mo
 Pikaisen googletuksen perusteella Xfce4 työpöydän ja käynnistysvalikon asetukset löytyivät polulta /home/<user>/.config/xfce4/
 Talteen päätettiin ottaa käynnistysvalikon asetustiedosto whiskermenu-1.rc ja komentokehotteen asetustiedosto terminalrc.
 Harjoituksessa luotiin Puppet-moduuli settingsmod, joka siirtää asetustiedostot oikeaan paikkaan ja näin asettaa asetukset voimaan.
-Asetustiedostoihin ei tehty muutoksia, koska halutut muutokset oli jo tehty graafiseen käyttöliittymään.
+Asetustiedostoihin ei tehty muutoksia, koska halutut muutokset oli jo tehty graafiseen käyttöliittymään. Asetukset tallentuivat käyttäjä-
+kohtaisiksi, mikä ei ollut ongelma koska suuri osa asetuksista oli vahvasti "makuasioita".
 
 	$ cd
 	$ mkdir settingsmod
