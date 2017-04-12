@@ -19,4 +19,4 @@ git stage . -> git add .
 sudo chown -R suomisim *
 
 
-
+git reset --hard
