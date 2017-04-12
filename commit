@@ -1,0 +1,14 @@
+#!/bin/bash
+
+git config --global user.email "simppas@gmail.com" && git config --global user.name "Simo Suominen"
+
+git config --global credential.helper "cache --timeout=3600"
+
+echo -n "Commit comment: "
+
+read COMMENT
+
+git add .
+git commit -m "$COMMENT"
+
+git pull && git push

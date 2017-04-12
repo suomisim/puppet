@@ -10,5 +10,12 @@ Tehtävään 2 kuvaus repositoryn luomisesta
 
 Vältä käyttäjäkohtaisia
 
+terokarvinen dconf
+
+ublock origin viime kurssi tietoista (debian)
+
+git stage -> git add
+
+sudo chown -R suomisim *
 
 

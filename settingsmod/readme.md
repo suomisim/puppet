@@ -82,7 +82,7 @@ olivat palanneet valikkoon, joten moduuli toimii ainakin jollain tasolla.
 
 Toimiva moduuli + muut harjoitusmoduulit siirrettiin lopuksi Githubiin alla olevilla komennoilla:
 
-	$ git stage .
+	$ git add .
 	$ git commit
 	$ git pull
 	$ git push 
