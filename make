@@ -4,6 +4,8 @@ echo -n "Module name: "
 
 read HANDLE
 
+cd modules
+
 mkdir $HANDLE
 
 mkdir $HANDLE/manifests/
@@ -20,5 +22,7 @@ read COMMENT
 
 echo "## Module $HANDLE" >> $HANDLE/readme.md
 echo $COMMENT >> $HANDLE/readme.md
+
+cd ..
 
 echo $HANDLE " module and subfolders created"
