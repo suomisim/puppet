@@ -17,26 +17,25 @@ touch $HANDLE/manifests/init.pp
 touch $HANDLE/readme.md
 
 cat <<EOT >> $HANDLE/manifests/init.pp
+class $HANDLE {
+	
+	package { '':
+		ensure => 'installed',
+	}
 
-class $HANDLE { 
+	file { '':
+		content => template(''),
+		notify => Service[''],
+		require => Package[''],
 
-#	package { '':
-#		ensure => '',
-#	}
-#
-#	file { '':
-#		content => template(''),
-#		notify => Service[''],
-#		require => Package[''],
-#
-#   }
-#    
-#	service { '':
-#		ensure  => 'true',
-#		enable  => true,
-#		require => Package[''],
-#	}
-#
+	}
+    
+	service { '':
+		ensure  => 'true',
+		enable  => true,
+		require => Package[''],
+	}
+
 }
 
 
