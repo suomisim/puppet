@@ -16,7 +16,9 @@ ublock origin viime kurssi tietoista (debian)
 
 git stage . -> git add .
 
-sudo chown -R suomisim *
+sudo chown -hR suomisim public_html/
+
 
 
 git reset --hard
+

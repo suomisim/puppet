@@ -3,21 +3,12 @@ class lamp {
 	package { 'apache2':
 		ensure => 'installed',
 	}
-#
-#	file { '':
-#		content => template(''),
-#		notify => Service[''],
-#		require => Package[''],
-#
-#	}
-#    
+   
 	service { 'apache2':
 		ensure  => 'true',
 		enable  => true,
 		require => Package['apache2'],
 	}
-
-
 
 
 	file { '/home/suomisim/public_html':
@@ -26,8 +17,8 @@ class lamp {
 	}
 	
 	
-	file { '/home/suomisim/public_html/index.html':
-		content => template('lamp/index.html.erb'),
+	file { '/home/suomisim/public_html/index.php':
+		content => template('lamp/index.php.erb'),
 		require => File['/home/suomisim/public_html'],
 	
 	
@@ -45,9 +36,18 @@ class lamp {
 		target => '/etc/apache2/mods-available/userdir.conf',
 		notify => Service["apache2"],
 		require => Package["apache2"],
+        
         }
 
 
-
+	package {'libapache2-mod-php':
+		ensure => installed
+	}
+	
+	file { '/etc/apache2/mods-available/php7.0.conf':
+		content => template('lamp/php7.0.conf.erb'),
+		require => Package["libapache2-mod-php"],
+		notify => Service["apache2"],
+	}
 
 }
