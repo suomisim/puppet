@@ -16,8 +16,33 @@ mkdir $HANDLE/templates/
 touch $HANDLE/manifests/init.pp
 touch $HANDLE/readme.md
 
-echo "class $HANDLE { }" >> $HANDLE/manifests/init.pp
+cat <<EOT >> $HANDLE/manifests/init.pp
 
+class $HANDLE { 
+
+#	package { '':
+#		ensure => '',
+#	}
+#
+#	file { '':
+#		content => template(''),
+#		notify => Service[''],
+#		require => Package[''],
+#
+#   }
+#    
+#	service { '':
+#		ensure  => 'true',
+#		enable  => true,
+#		require => Package[''],
+#	}
+#
+}
+
+
+
+
+EOT
 
 echo -n "Give module description: "
 read COMMENT
