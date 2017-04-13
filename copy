@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# A script to copy modules to /etc/puppet/modules. Must be run with sudo
+
 cd modules
 
 printf "Select a module to copy:\n"

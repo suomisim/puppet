@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# A script to commit to GitHub
+
 git config --global user.email "simppas@gmail.com" && git config --global user.name "Simo Suominen"
 
 git config --global credential.helper "cache --timeout=3600"

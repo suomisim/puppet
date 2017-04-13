@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# A script to run modules copied to /etc/puppet/modules. Must be run with sudo
+
 printf "Select a module to run:\n"
 
 cd /etc/puppet/modules/

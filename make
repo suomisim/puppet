@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# A script to create a module and needed folders
+
 echo -n "Module name: "
 
 read HANDLE
