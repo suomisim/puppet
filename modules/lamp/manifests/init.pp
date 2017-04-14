@@ -1,5 +1,6 @@
 class lamp {
-	
+
+ 	
 	package { 'apache2':
 		ensure => 'installed',
 	}
@@ -10,17 +11,15 @@ class lamp {
 		require => Package['apache2'],
 	}
 
-
 	file { '/home/suomisim/public_html':
 		ensure => 'directory',
-	 
+
 	}
 	
 	
 	file { '/home/suomisim/public_html/index.php':
 		content => template('lamp/index.php.erb'),
 		require => File['/home/suomisim/public_html'],
-	
 	
 	}
 	
@@ -36,12 +35,10 @@ class lamp {
 		target => '/etc/apache2/mods-available/userdir.conf',
 		notify => Service["apache2"],
 		require => Package["apache2"],
-        
-        }
-
+	}
 
 	package {'libapache2-mod-php':
-		ensure => installed
+		ensure => 'installed',
 	}
 	
 	file { '/etc/apache2/mods-available/php7.0.conf':
@@ -49,5 +46,28 @@ class lamp {
 		require => Package["libapache2-mod-php"],
 		notify => Service["apache2"],
 	}
+	
+	package {'mysql-server':
+		ensure => 'installed',
+	}
 
+	$mysqlpw = "ChangeOnFirstStart!"
+
+	exec { 'set-mysql-password':
+		path => ["/bin", "/usr/bin"],
+		command => "mysqladmin -uroot password $mysqlpw",
+		require => Package["mysql-server"],
+	}
+	
+	service { 'mysql':
+		ensure  => 'true',
+		enable  => 'true',
+		require => Package['mysql-server'],
+	}
+	
+	package {'php-mysql':
+		ensure => 'installed',
+		require => Package['mysql-server'],
+	}
+		
 }

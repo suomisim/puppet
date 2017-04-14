@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# A script to compeletely uninstall MySql database
+
+sudo service mysql stop
+sudo service mysqld stop
+sudo killall -9 mysql
+sudo killall -9 mysqld
+sudo apt-get -y purge mysql-server mysql-client mysql-common
+sudo apt-get -y autoremove
+sudo apt-get -y autoclean
+sudo deluser mysql
+sudo rm -rf /var/lib/mysql
+sudo apt-get -y purge mysql-server-core-5.5
+sudo apt-get  -y purge mysql-client-core-5.5
+sudo rm -rf /var/log/mysql
+sudo rm -rf /etc/mysql
