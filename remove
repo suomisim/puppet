@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# A script to remove modules, use with caution
+
+cd modules
+
+printf "Select a module to remove:\n"
+select d in */; do test -n "$d" && break; echo ">>> Invalid Selection"; done
+
+rm -r "$d"
+
+echo done
+
+

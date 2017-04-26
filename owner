@@ -2,4 +2,4 @@
 
 # A script to give proper owner for files
 
-sudo chown -hR suomisim puppet/
+sudo chown -hR suomisim /home/suomisim/puppet/

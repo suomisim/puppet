@@ -22,3 +22,10 @@ sudo chown -hR suomisim public_html/
 
 git reset --hard
 
+Lisää työpöydän reset moduuliin
+Lisää palomuuri LAMP moduuliin
+ublock origin ei ihan toiminut about:config
+
+
+
+
