@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# A script to remove Puppet certificates. Must be run with sudo
+# A script to remove Puppet certificates. Must be run with sudo (and care)
 
 service puppet stop
 service puppetmaster stop
@@ -9,3 +9,5 @@ rm -r /var/lib/puppet/ssl/
 
 service puppetmaster start
 service puppet start
+
+echo done
