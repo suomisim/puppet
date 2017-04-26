@@ -5,7 +5,7 @@
 service puppet stop
 service puppetmaster stop
 
-rm -r /var/lib/puppet/ssl/
+rm -rf /var/lib/puppet/ssl/
 
 service puppetmaster start
 service puppet start

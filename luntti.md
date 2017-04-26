@@ -1,4 +1,5 @@
 # Palvelinten hallinta luntti
+Lähde: http://terokarvinen.com/2017/aikataulu-%E2%80%93-palvelinten-hallinta-ict4tn022-2-%E2%80%93-5-op-uusi-ops-loppukevat-2017-p2
 
 ## 12.4.2017
 
@@ -28,7 +29,7 @@ Lisää työpöydän reset moduuliin
 Lisää palomuuri LAMP moduuliin
 ublock origin ei ihan toiminut about:config
 
-Single source of truth
+Single source of truthsu
 Itempotency
 IaaC
 
@@ -51,3 +52,29 @@ sudo rm -r /var/lib/puppet/ssl/
 
 
 sudo puppet agent -tdv
+
+Tee mastermoduuli /etc/puppet/puppet.conf
+
+
+
+[main]
+logdir=/var/log/puppet
+vardir=/var/lib/puppet
+ssldir=/var/lib/puppet/ssl
+rundir=/run/puppet
+factpath=$vardir/lib/facter
+prerun_command=/etc/puppet/etckeeper-commit-pre
+postrun_command=/etc/puppet/etckeeper-commit-post
+runinterval = 1m
+
+[master]
+# These are needed when the puppetmaster is run by passenger
+# and can safely be removed if webrick is used.
+ssl_client_header = SSL_CLIENT_S_DN
+ssl_client_verify_header = SSL_CLIENT_VERIFY
+dns_alt_names = itlabra.local
+
+[agent]
+
+server = itlabra.local
+
