@@ -17,6 +17,13 @@ class slavesetup {
 		require => Package['puppet'],
 	}
 
+	exec { 'puppet-agent':
+		path => ["/bin", "/usr/bin"],
+		command => "puppet agent -tdv",
+		require => Service["puppet"],
+	}
+	
+	
 }
 
 
