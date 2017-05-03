@@ -57,24 +57,25 @@ Tee mastermoduuli /etc/puppet/puppet.conf
 
 
 
-[main]
-logdir=/var/log/puppet
-vardir=/var/lib/puppet
-ssldir=/var/lib/puppet/ssl
-rundir=/run/puppet
-factpath=$vardir/lib/facter
-prerun_command=/etc/puppet/etckeeper-commit-pre
-postrun_command=/etc/puppet/etckeeper-commit-post
-runinterval = 1m
 
-[master]
-# These are needed when the puppetmaster is run by passenger
-# and can safely be removed if webrick is used.
-ssl_client_header = SSL_CLIENT_S_DN
-ssl_client_verify_header = SSL_CLIENT_VERIFY
-dns_alt_names = itlabra.local
 
-[agent]
+## 3.5.2017
 
-server = itlabra.local
+Lisää moduuliin tarkoitus
 
+Avaceroot
+
+class ufw {
+Exec {
+path => ‘/bin/:/usr/bin/:/sbin/:/usr/sbin/’,
+}
+
+exec { ‘ufw enable’:
+unless => ‘sudo ufw status verbose|grep “Status: active”‘,
+}
+
+exec { ‘ufw allow 22/tcp’:
+unless => ‘ufw status verbose|grep 22/tcp’,
+}
+
+}
