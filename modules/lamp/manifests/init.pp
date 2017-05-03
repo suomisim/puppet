@@ -1,9 +1,12 @@
 class lamp {
 
+# Apache palvelimen asennus
  	
 	package { 'apache2':
 		ensure => 'installed',
 	}
+
+# Apache palvelun käynnistys
    
 	service { 'apache2':
 		ensure  => 'true',
@@ -11,14 +14,20 @@ class lamp {
 		require => Package['apache2'],
 	}
 
+# Käyttäjän  suomisim websivun kansion luonti
+
 	file { '/home/suomisim/public_html':
 		ensure => 'directory',
 	}
 	
+# Käyttäjän suomisim kotisivun muokkaus
+
 	file { '/home/suomisim/public_html/index.php':
 		content => template('lamp/index.php.erb'),
 		require => File['/home/suomisim/public_html'],
 	}
+
+# Käyttäjän websivukansion käyttöönotto (a2enmod userdir -komento)
 	
 	file { '/etc/apache2/mods-enabled/userdir.load':
 		ensure => 'link',
@@ -33,6 +42,8 @@ class lamp {
 		notify => Service["apache2"],
 		require => Package["apache2"],
 	}
+	
+# Apache-asennus päättyy tähän
 
 	package {'libapache2-mod-php':
 		ensure => 'installed',
