@@ -79,3 +79,16 @@ unless => ‘ufw status verbose|grep 22/tcp’,
 }
 
 }
+
+## 24.10.2017
+
+sudo puppet resource file/package/service
+puppet describe file/package/service
+
+/etc/puppet/manifests/site.pp ->
+
+include helloworld
+
+sudo puppet apply /etc/puppet/manifests/site.pp
+
+etckeeper

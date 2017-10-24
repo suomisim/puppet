@@ -1,7 +1,7 @@
 class setupmodv1 {
 	
 # Pakettien asennus
-    
+
     $paketit = [ 'ssh', 'curl', 'lynx', 'shutter', 'geany', 'tree', 'firefox' ]
 
     package { $paketit: ensure => 'installed'    

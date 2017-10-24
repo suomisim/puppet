@@ -1,4 +1,4 @@
-class lamp {
+class phpapache {
 	
 	package { 'apache2':
 		ensure => 'installed',
@@ -18,7 +18,7 @@ class lamp {
 	
 	
 	file { '/home/suomisim/public_html/index.php':
-		content => template('lamp/index.php.erb'),
+		content => template('phpapache/index.php.erb'),
 		require => File['/home/suomisim/public_html'],
 	
 	
@@ -45,7 +45,7 @@ class lamp {
 	}
 	
 	file { '/etc/apache2/mods-available/php7.0.conf':
-		content => template('lamp/php7.0.conf.erb'),
+		content => template('phpapache/php7.0.conf.erb'),
 		require => Package["libapache2-mod-php"],
 		notify => Service["apache2"],
 	}

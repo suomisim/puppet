@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# A script to run modules copied to /etc/puppet/modules WITH VERBOSE DEBUG. Must be run with sudo
+
+printf "Select a module to run:\n"
+
+cd /etc/puppet/modules/
+select d in *; do test -n "$d" && break; echo ">>> Invalid Selection"; done
+
+echo "$d"
+
+puppet apply -e 'class {'"$d"':}' --verbose --debug

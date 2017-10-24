@@ -1,30 +1,29 @@
 class ufwmod {
 
-  # Path to binaries, to shorten commands below and avoid global search path:
-  $grep = '/bin/grep'
-  $ufw = '/usr/sbin/ufw'
-  $yes = '/usr/bin/yes'
+	Exec { path => [ '/bin/', '/sbin/' , '/usr/bin/', '/usr/sbin/' ] }
 
 	package { 'ufw':
-		ensure => present,
-	}
-
-	Package['ufw'] -> Exec['ufw-default-deny'] -> Exec['ufw-enable']
-
-	exec { 'ufw-default-deny':
-		command => "${ufw} default deny",
-		unless  => "${ufw} status verbose | ${grep} \"Default: deny (incoming), allow (outgoing)\"",
+		ensure => 'installed',
+		allowcdrom => 'true',
 	}
 
 	exec { 'ufw-enable':
-		command => "${yes} | ${ufw} enable",
-		unless  => "${ufw} status | ${grep} \"Status: active\"",
+		command => 'ufw enable',
+		require => Package['ufw'],
 	}
-
+	file {'/etc/ufw/user.rules':
+		content => template('ufwmod/user.rules.erb'),
+		require => Package['ufw'],
+		notify => Service['ufw'],
+	}
+	file {'/etc/ufw/user6.rules':
+		content => template('ufwmod/user6.rules.erb'),
+		require => Package['ufw'],
+		notify => Service['ufw'],
+	}
 	service { 'ufw':
-		ensure    => running,
-		enable    => true,
-		hasstatus => true,
-		subscribe => Package['ufw'],
+		ensure  => 'true',
+		enable  => 'true',
+		require => Package['ufw'],
 	}
 }
