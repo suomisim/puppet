@@ -59,7 +59,7 @@ class lamp {
 		ensure => 'installed',
 	}
 
-	$mysqlpw = "ChangeOnFirstStart!"
+	$mysqlpw = "guest"
 
 	exec { 'set-mysql-password':
 		path => ["/bin", "/usr/bin"],

@@ -1,5 +1,6 @@
 # Palvelinten hallinta luntti
 Lähde: http://terokarvinen.com/2017/aikataulu-%E2%80%93-palvelinten-hallinta-ict4tn022-2-%E2%80%93-5-op-uusi-ops-loppukevat-2017-p2
+http://terokarvinen.com/2017/aikataulu-palvelinten-hallinta-ict4tn022-3-5-op-uusi-ops-loppusyksy-2017-p5
 
 ## 12.4.2017
 
@@ -92,3 +93,14 @@ include helloworld
 sudo puppet apply /etc/puppet/manifests/site.pp
 
 etckeeper
+
+## 31.10.2017
+
+/etc/puppet.conf
+
+[main]
+ordering = manifest
+
+strace -e open
+
+Terokarvinen puppet defaults

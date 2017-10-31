@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# A script to create a module and needed folders
+# A script to create a module and needed folders + readme.md
 
 echo -n "Module name: "
 
