@@ -104,3 +104,11 @@ ordering = manifest
 strace -e open
 
 Terokarvinen puppet defaults
+
+## 7.11.2017
+
+Moduuleja livetikku kuntoon + hostname livetikulle
+Terokarvinen vagrantfile
+Terokarvinen vagrant tscript
+
+

@@ -1,0 +1,34 @@
+#Source http://TeroKarvinen.com/
+
+$slavescript = <<SLAVESCRIPT
+set -o verbose
+apt-get update
+apt-get -y install git puppet
+git clone https://github.com/suomisim/puppet /home/vagrant/puppet
+SLAVESCRIPT
+
+$masterscript = <<MASTERSCRIPT
+set -o verbose
+apt-get update
+apt-get -y install git puppetmaster
+git clone https://github.com/suomisim/puppet /home/vagrant/puppet
+MASTERSCRIPT
+
+Vagrant.configure(2) do |config|
+ config.vm.box = "bento/ubuntu-16.04"
+
+ config.vm.define "master01" do |master01|
+   master01.vm.hostname = "master01"
+   master01.vm.provision "shell", inline: $masterscript
+ end
+ 
+ config.vm.define "slave01" do |slave01|
+   slave01.vm.hostname = "slave01"
+   slave01.vm.provision "shell", inline: $slavescript
+ end
+
+ config.vm.define "slave02" do |slave02|
+   slave02.vm.hostname = "slave02"
+   slave02.vm.provision "shell", inline: $slavescript
+ end
+end
