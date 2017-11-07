@@ -6,12 +6,11 @@ class liveusbsetup {
 	
 # Pakettien asennus
 
-    $paketit = [ 'ssh', 'curl', 'lynx', 'shutter', 'geany', 'tree', 'firefox' ]
+    $paketit = [ 'ssh', 'curl', 'lynx', 'shutter', 'geany', 'tree', 'firefox', 'vagrant', 'virtualbox' ]
 
     package { $paketit: 
 		ensure => 'installed',
 		allowcdrom => 'true',
-
     }
 
 # Työpöydän asetukset	
@@ -49,6 +48,7 @@ class liveusbsetup {
 		allowcdrom => 'true',
 	}
 # Hostnamen muutos
+
 	exec { 'hostnamectl':
 		command => 'hostnamectl set-hostname itlabra',
 		unless => 'hostname | grep itlabra',
