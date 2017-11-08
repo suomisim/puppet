@@ -1,8 +1,8 @@
 class helloworld {
 	
 
-	file { '/etc/helloworld.txt':
-		content => "hello world!\n",
+	file { '/tmp/helloworld.txt':
+		content => "Hello world!\n",
 	}
     
 }
