@@ -4,7 +4,7 @@ class vmslavesetup {
 		ensure => 'installed',
 	}
 	file { '/etc/hosts':
-		content => template('vmslaveetup/hosts.erb'),
+		content => template('vmslavesetup/hosts.erb'),
 	}
 	file { '/etc/puppet/puppet.conf':
 		content => template('vmslavesetup/puppet.conf.erb'),
