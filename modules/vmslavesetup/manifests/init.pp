@@ -3,6 +3,9 @@ class vmslavesetup {
 	package { 'puppet':
 		ensure => 'installed',
 	}
+	file { '/etc/hosts':
+		content => template('vmslaveetup/hosts.erb'),
+	}
 	file { '/etc/puppet/puppet.conf':
 		content => template('vmslavesetup/puppet.conf.erb'),
 		notify => Service['puppet'],

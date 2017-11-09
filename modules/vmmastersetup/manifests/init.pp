@@ -3,6 +3,9 @@ class vmmastersetup {
 	package { 'puppetmaster':
 		ensure => 'installed',
 	}
+	file { '/etc/hosts':
+		content => template('vmmastersetup/hosts.erb'),
+	}
 	file { '/etc/puppet/manifests/site.pp':
 		content => template('vmmastersetup/site.pp.erb'),
 		require => Package['puppetmaster'],

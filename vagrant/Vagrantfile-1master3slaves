@@ -14,7 +14,7 @@ set -o verbose
 apt-get update
 apt-get -y install git puppetmaster
 git clone https://github.com/suomisim/puppet /home/vagrant/puppet
-cp -a /home/suomisim/puppet/modules/helloworld /etc/puppet/modules/
+cp -a /home/vagrant/puppet/modules/helloworld /etc/puppet/modules/
 puppet apply --modulepath=/home/vagrant/puppet/modules -e "include vmmastersetup"
 MASTERSCRIPT
 
