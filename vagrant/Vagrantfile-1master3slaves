@@ -1,0 +1,40 @@
+#Source http://TeroKarvinen.com/
+# Vagrantfile for 1 master 3 slaves, completely automated.
+
+$slavescript = <<SLAVESCRIPT
+set -o verbose
+apt-get update
+apt-get -y install git puppet
+git clone https://github.com/suomisim/puppet /home/vagrant/puppet
+puppet apply --modulepath=/home/vagrant/puppet/modules -e "include vmslavesetup"
+SLAVESCRIPT
+
+$masterscript = <<MASTERSCRIPT
+set -o verbose
+apt-get update
+apt-get -y install git puppetmaster
+git clone https://github.com/suomisim/puppet /home/vagrant/puppet
+cp -a /home/suomisim/puppet/modules/helloworld /etc/puppet/modules/
+puppet apply --modulepath=/home/vagrant/puppet/modules -e "include vmmastersetup"
+MASTERSCRIPT
+
+Vagrant.configure(2) do |config|
+ config.vm.box = "bento/ubuntu-16.04"
+
+ config.vm.define "master01" do |master01|
+   master01.vm.hostname = "master01"
+   master01.vm.provision "shell", inline: $masterscript
+ end
+ config.vm.define "slave01" do |slave01|
+   slave01.vm.hostname = "slave01"
+   slave01.vm.provision "shell", inline: $slavescript
+ end
+# config.vm.define "slave02" do |slave02|
+#   slave02.vm.hostname = "slave02"
+#   slave02.vm.provision "shell", inline: $slavescript
+# end
+#  config.vm.define "slave03" do |slave03|
+#   slave03.vm.hostname = "slave03"
+#   slave03.vm.provision "shell", inline: $slavescript
+# end
+end
