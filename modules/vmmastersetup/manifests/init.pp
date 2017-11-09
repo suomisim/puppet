@@ -6,6 +6,7 @@ class vmmastersetup {
 	file { '/etc/puppet/manifests/site.pp':
 		content => template('vmmastersetup/site.pp.erb'),
 		require => Package['puppetmaster'],
+	}
 	file { '/etc/puppet/puppet.conf':
 		content => template('vmmastersetup/puppet.conf.erb'),
 		notify => Service['puppetmaster'],
