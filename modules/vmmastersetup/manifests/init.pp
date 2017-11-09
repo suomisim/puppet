@@ -14,7 +14,7 @@ class vmmastersetup {
 	}
 	exec { 'puppet-remcerts':
 		path => ["/bin", "/usr/bin"],
-		command => "rm -rf /var/lib/puppet/ssl/,
+		command => "rm -rf /var/lib/puppet/ssl/",
 		require => File["/etc/puppet/puppet.conf"],
 		notify => Service['puppetmaster'],
 	} 
