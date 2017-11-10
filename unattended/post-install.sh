@@ -2,4 +2,7 @@
 
 git clone https://github.com/suomisim/puppet /home/suomisim/puppet
 
-puppet apply --modulepath=/home/suomisim/puppet/modules -e "include setupmodv1"
+wget https://raw.githubusercontent.com/suomisim/puppet/master/unattended/firstboot
+sudo mv firstboot /etc/init.d/
+sudo chmod +x /etc/init.d/firstboot
+update-rc.d firstboot defaults
