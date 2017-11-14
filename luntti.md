@@ -112,6 +112,22 @@ Terokarvinen vagrantfile
 Terokarvinen vagrant tscript
 GitHub poponappi
 
+## 14.11.2017
 
+ctrl + k poistaa rivin nanolla
+
+Vagrant.configure("2") do |config|
+  config.vm.network "private_network", type: "dhcp"
+end
+
+nc -vz [osoite] [portti] yhden portin skannaus
+
+df -h . tarkistaa paljonko on tilaa
+
+sudo -i paras /var/lib/puppet
+
+sudo grep -ri [haku] [polku]
+
+/etc/apt/apt-conf
 
 
