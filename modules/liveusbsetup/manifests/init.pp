@@ -36,17 +36,17 @@ class liveusbsetup {
 		content => template('liveusbsetup/weather-11.rc.erb'),
 	}
 
-# Firefox asetukset
-
-	file { '/etc/firefox/syspref.js':
-		content => template('liveusbsetup/syspref.js.erb'),
-	}
-
-	package { 'xul-ext-ublock-origin':
-		ensure => 'installed',
-		require => File['/etc/firefox/syspref.js'],
-		allowcdrom => 'true',
-	}
+# Firefox asetukset poistettu käytöstä koska uusi Firefox ei tue legacy ublock originia
+#
+#	file { '/etc/firefox/syspref.js':
+#		content => template('liveusbsetup/syspref.js.erb'),
+#	}
+#
+#	package { 'xul-ext-ublock-origin':
+#		ensure => 'installed',
+#		require => File['/etc/firefox/syspref.js'],
+#		allowcdrom => 'true',
+#	}
 # Hostnamen muutos
 
 	exec { 'hostnamectl':
