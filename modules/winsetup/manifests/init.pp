@@ -1,46 +1,99 @@
 class winsetup {
 	include chocolatey
 	
+	# Windows Update - Ask to download & ask to install
+	registry_key{'HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate':
+		ensure => present,
+    }
+    registry_value{'HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU':
+        ensure => present,
+        type => dword,
+        data => '2',
+        require => Registry_key['HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate'],
+    }
+	# Create user
+	user {'suomisim':
+		name      => 'suomisim',
+		ensure    => present,
+		groups    => ['Users'],
+		password  => 'vaihdettava',
+		managehome => true,
+	}
+	# Remove all modern Windows Apps (except Store)
 	exec {'pwsh-remove':
-		command => '$(Get-AppxPackage *zune* *3dbuilder* *windowsalarms* *windowscommunicationsapps* *windowscamera* *officehub* *skypeapp* *getstarted* *windowsmaps* 
-		*solitairecollection* *bingfinance* *bingnews* *onenote* *people* *windowsphone* *photos* *bingsports* *soundrecorder* *bingweather* | Remove-AppxPackage)',
+		command => '$(Get-AppxPackage | where-object {$_.name –notlike "*store*"} --allusers | Remove-AppxPackage)',
 		provider => powershell,
 	}
+	# Uninstall onedrive
+	file {'C:\Puppetfiles': ensure => directory,}
 	file {'C:\Puppetfiles\uninstall_onedrive.bat':
 		source => 'puppet:///modules/winsetup/uninstall_onedrive.bat',
 		source_permissions => ignore,
+		require => File['C:\Puppetfiles'],
 	}
 	exec {'onedrive-uninstall':
 		command => "C:\Puppetfiles\uninstall_onedrive.bat",
 		require => File["C:\Puppetfiles\uninstall_onedrive.bat"],
 	}
+	# Install apps
 	package {["firefox","7zip", "notepadplusplus", "ccleaner", "classic-shell", "discord"]:}
 	Package {
        ensure => "installed",
        provider => "chocolatey",
 	}
+	# Correct time in case of Ubuntu boot or install
 	registry_value{'HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\TimeZoneInformation\RealTimeIsUniversal':
 		ensure => present,
 		type => dword,
 		data => '1',
 	}
+	# Format a raw drive to E: and name it "Steam"
 	exec {'pwsh-format':
 		command => '$(Get-Disk | Where partitionstyle -eq 'raw' | Initialize-Disk -PartitionStyle MBR -PassThru | New-Partition -AssignDriveLetter -DriveLetter E -UseMaximumSize | Format-Volume -FileSystem NTFS -NewFileSystemLabel "Steam" -Confirm:$false),
 		provider => powershell,
+		require => Package,
 	}
-	file {'C:\Puppetfiles\SteamSetup.exe':
-		source => 'puppet:///modules/winsetup/SteamSetup.exe',
-		source_permissions => ignore,
-		require => Exec["pwsh-format"],
+	# Install and run steam to E:\Steam
+    file {'C:\Puppetfiles\Steam.zip':
+                source => 'puppet:///modules/winapps/Steam.zip',
+                source_permissions => ignore,
+				require => Exec['pwsh-format'],
+    }
+    file {'C:\Puppetfiles\extract-steam.bat':
+                source => 'puppet:///modules/winapps/extract-steam.bat',
+                source_permissions => ignore,
+                require => File['C:\Puppetfiles\Steam.zip'],
+    }
+    exec {'extract-steam':
+                command => 'extract-steam.bat',
+                require => File["C:\Puppetfiles\extract-steam.bat"],
+                path => 'C:\Puppetfiles',
+    }
+	windows::shortcut { 'C:\Users\suomisim\Desktop\Steam.lnk':
+		target      => 'E:\Steam\Steam.exe',
+		description => 'Steam',
 	}
-	package { "Steam":
-		ensure    => installed,
-		source    => 'C:\Puppetfiles\steam.exe',
-		install_options => ['/VERYSILENT','INSTALLDIR=D:\Steam']
-		require => File["C:\Puppetfiles\SteamSetup.exe"],
-}
+	class { 'windows::power_scheme':
+		ensure => 'High performance',
+	}
+	file {'C:\Puppetfiles\Win10.ps1':
+		source => 'puppet:///modules/winapps/Win10.ps1',
+        source_permissions => ignore,
+		require => 
+    }
+    exec {'pwsh-clean':
+        command => '$(C:\Puppetfiles\Win10.ps1)',
+        provider => powershell,
+        require => File['C:\Puppetfiles\Win10.ps1'],
+    }
 
 
-   
+
+	
+	
+	
+
+	
+	
 }
 
