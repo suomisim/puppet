@@ -11,28 +11,28 @@ class winsetup {
         data => '2',
         require => Registry_key['HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate'],
     }
-	# Format a raw drive to E: and name it "Steam"
-	exec {'pwsh-format':
-		command => '$(Get-Disk | Where partitionstyle -eq 'raw' | Initialize-Disk -PartitionStyle MBR -PassThru | New-Partition -AssignDriveLetter -DriveLetter E -UseMaximumSize | Format-Volume -FileSystem NTFS -NewFileSystemLabel "Steam" -Confirm:$false),
-		provider => powershell,
-		require => Package,
-	}
-	# Install and run steam to E:\Steam
-    file {'C:\Puppetfiles\Steam.zip':
-                source => 'puppet:///modules/winapps/Steam.zip',
-                source_permissions => ignore,
-				require => Exec['pwsh-format'],
-    }
-    file {'C:\Puppetfiles\extract-steam.bat':
-                source => 'puppet:///modules/winapps/extract-steam.bat',
-                source_permissions => ignore,
-                require => File['C:\Puppetfiles\Steam.zip'],
-    }
-    exec {'extract-steam':
-                command => 'extract-steam.bat',
-                require => File["C:\Puppetfiles\extract-steam.bat"],
-                path => 'C:\Puppetfiles',
-    }
+	# Format a raw drive to E: and name it "Steam" tässä oli ongelma korjattu jotain
+#	exec {'pwsh-format':
+#		command => '$(Get-Disk | Where partitionstyle -eq "raw" | Initialize-Disk -PartitionStyle MBR -PassThru | New-Partition -AssignDriveLetter -DriveLetter E -UseMaximumSize | Format-Volume -FileSystem NTFS -NewFileSystemLabel "Steam" -Confirm:$false),
+#		provider => powershell,
+#		require => Package,
+#	}
+#	# Install and run steam to E:\Steam
+#    file {'C:\Puppetfiles\Steam.zip':
+#                source => 'puppet:///modules/winapps/Steam.zip',
+#                source_permissions => ignore,
+#				require => Exec['pwsh-format'],
+#   }
+#    file {'C:\Puppetfiles\extract-steam.bat':
+#                source => 'puppet:///modules/winapps/extract-steam.bat',
+#                source_permissions => ignore,
+#                require => File['C:\Puppetfiles\Steam.zip'],
+#    }
+#    exec {'extract-steam':
+#                command => 'extract-steam.bat',
+#                require => File["C:\Puppetfiles\extract-steam.bat"],
+#                path => 'C:\Puppetfiles',
+#    }
 	# Create user
 	user {'suomisim':
 		name      => 'suomisim',
@@ -57,8 +57,8 @@ class winsetup {
 		command => "C:\Puppetfiles\uninstall_onedrive.bat",
 		require => File["C:\Puppetfiles\uninstall_onedrive.bat"],
 	}
-	# Install apps
-	package {["firefox","7zip", "notepadplusplus", "ccleaner", "classic-shell", "discord"]:}
+	# Install apps discord ei toimi molemmilla käyttäjillä, vaihdetaan .install
+	package {["firefox","7zip", "notepadplusplus", "ccleaner", "classic-shell", "discord.install"]:}
 	Package {
        ensure => "installed",
        provider => "chocolatey",
@@ -69,10 +69,10 @@ class winsetup {
 		type => dword,
 		data => '1',
 	}
-	windows::shortcut { 'C:\Users\suomisim\Desktop\Steam.lnk':
-		target      => 'E:\Steam\Steam.exe',
-		description => 'Steam',
-	}
+#	windows::shortcut { 'C:\Users\suomisim\Desktop\Steam.lnk':
+#		target      => 'E:\Steam\Steam.exe',
+#		description => 'Steam',
+#	}
 	class { 'windows::power_scheme':
 		ensure => 'High performance',
 	}
