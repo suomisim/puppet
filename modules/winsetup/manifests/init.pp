@@ -11,11 +11,12 @@ class winsetup {
         data => '2',
         require => Registry_key['HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate'],
     }
+	file {'C:\Puppetfiles': ensure => directory,}
 	# Format a raw drive to E: and name it "Steam" tässä oli ongelma korjattu jotain
 #	exec {'pwsh-format':
 #		command => '$(Get-Disk | Where partitionstyle -eq "raw" | Initialize-Disk -PartitionStyle MBR -PassThru | New-Partition -AssignDriveLetter -DriveLetter E -UseMaximumSize | Format-Volume -FileSystem NTFS -NewFileSystemLabel "Steam" -Confirm:$false),
 #		provider => powershell,
-#		require => Package,
+#		require => File['C:\Puppetfiles'],
 #	}
 #	# Install and run steam to E:\Steam
 #    file {'C:\Puppetfiles\Steam.zip':
@@ -47,7 +48,6 @@ class winsetup {
 		provider => powershell,
 	}
 	# Uninstall onedrive
-	file {'C:\Puppetfiles': ensure => directory,}
 	file {'C:\Puppetfiles\uninstall_onedrive.bat':
 		source => 'puppet:///modules/winsetup/uninstall_onedrive.bat',
 		source_permissions => ignore,
