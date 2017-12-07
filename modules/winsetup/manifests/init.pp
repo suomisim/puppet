@@ -14,7 +14,7 @@ class winsetup {
 	file {'C:\Puppetfiles': ensure => directory,}
 	# Format a raw drive to E: and name it "Steam" tässä oli ongelma korjattu jotain
 #	exec {'pwsh-format':
-#		command => '$(Get-Disk | Where partitionstyle -eq "raw" | Initialize-Disk -PartitionStyle MBR -PassThru | New-Partition -AssignDriveLetter -DriveLetter E -UseMaximumSize | Format-Volume -FileSystem NTFS -NewFileSystemLabel "Steam" -Confirm:$false),
+#		command => '$(Get-Disk | Where partitionstyle -eq "raw" | Initialize-Disk -PartitionStyle MBR -PassThru | New-Partition -AssignDriveLetter -DriveLetter E -UseMaximumSize | Format-Volume -FileSystem NTFS -NewFileSystemLabel "Steam" -Confirm:$false)',
 #		provider => powershell,
 #		require => File['C:\Puppetfiles'],
 #	}

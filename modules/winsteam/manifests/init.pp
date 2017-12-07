@@ -1,14 +1,19 @@
 class winsteam {
 	
-	exec {'pwsh-format':
-		command => '$(Get-Disk | Where partitionstyle -eq "raw" | Initialize-Disk -PartitionStyle MBR -PassThru | New-Partition -AssignDriveLetter -DriveLetter E -UseMaximumSize | Format-Volume -FileSystem NTFS -NewFileSystemLabel "Steam" -Confirm:$false),
-		provider => powershell,
-	}
-	# Install and run steam to E:\Steam
+    exec {'pwsh-format-one':
+            command => '$(Get-Disk 1 | Initialize-Disk -PartitionStyle MBR -PassThru)',
+            provider => powershell,
+    }
+    exec {'pwsh-format-two':
+            command => '$(Get-Disk 1 | New-Partition -AssignDriveLetter -UseMaximumSize | Format-Volume -FileSystem NTFS -NewFileSystemLabel "Steam" -Confirm:$false)',
+            provider => powershell,
+            require => Exec['pwsh-format-one'],
+    }
+		
     file {'C:\Puppetfiles\Steam.zip':
                 source => 'puppet:///modules/winapps/Steam.zip',
                 source_permissions => ignore,
-				require => Exec['pwsh-format'],
+				require => Exec['pwsh-format-two'],
 	}
     file {'C:\Puppetfiles\extract-steam.bat':
                 source => 'puppet:///modules/winapps/extract-steam.bat',
