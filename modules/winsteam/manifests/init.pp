@@ -34,20 +34,20 @@ class winsteam {
             source_permissions => ignore,
 			require => File['C:\Puppetfiles'],
 	}
-    file {'C:\Puppetfiles\extract-steam.bat':
-            source => 'puppet:///modules/winapps/extract-steam.bat',
-            source_permissions => ignore,
+    exec {'steam-extract':
+            command => '7z.exe -y e C:\Puppetfiles\Steam.zip -oE:\Steam',
+            path => 'C:\Program Files\7-Zip',
             require => File['C:\Puppetfiles\Steam.zip'],
     }
-    exec {'extract-steam':
-            command => 'extract-steam.bat',
-            path => 'C:\Puppetfiles',
-			require => File["C:\Puppetfiles\extract-steam.bat"],
+    exec {'steam-run':
+            command => 'steam.exe -silent',
+            path => 'E:\Steam',
+			require => Exec['steam-extract'],
 	}
 	windows::shortcut { 'C:\Users\suomisim\Desktop\Steam.lnk':
 		target      => 'E:\Steam\Steam.exe',
 		description => 'Steam',
-		require => Exec['extract-steam'],
+		require => Exec['steam-run'],
 	}
 
 }

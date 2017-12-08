@@ -39,8 +39,7 @@ class winsetup {
 		require => File["C:\Puppetfiles\uninstall_onedrive.bat"],
 	}
 
-	package {["firefox", "notepadplusplus", "ccleaner", "classic-shell", "discord.install"]:}
-	Package {
+	package {firefox, notepadplusplus, ccleaner, classic-shell, discord.install:
        ensure => "installed",
        provider => "chocolatey",
 	   require => Exec['onedrive-uninstall'],
@@ -49,7 +48,7 @@ class winsetup {
 	file {'C:\Puppetfiles\Win10.ps1':
 		source => 'puppet:///modules/winapps/Win10.ps1',
         source_permissions => ignore,
-		require => Package['"firefox", "notepadplusplus", "ccleaner", "classic-shell", "discord.install"'],
+		require => Package['firefox, notepadplusplus, ccleaner, classic-shell, discord.install],
     }
     exec {'pwsh-clean':
         command => '$(C:\Puppetfiles\Win10.ps1)',
