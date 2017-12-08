@@ -38,16 +38,16 @@ class winsteam {
             command => '7z.exe -y e C:\Puppetfiles\Steam.zip -oE:\Steam',
             path => 'C:\Program Files\7-Zip',
             require => File['C:\Puppetfiles\Steam.zip'],
-    }
+	}
+	windows::shortcut { 'C:\Users\suomisim\Desktop\Steam.lnk':
+			target      => 'E:\Steam\Steam.exe',
+			description => 'Steam',
+			require => Exec['steam-extract'],
+	}
     exec {'steam-run':
             command => 'steam.exe -silent',
             path => 'E:\Steam',
-			require => Exec['steam-extract'],
-	}
-	windows::shortcut { 'C:\Users\suomisim\Desktop\Steam.lnk':
-		target      => 'E:\Steam\Steam.exe',
-		description => 'Steam',
-		require => Exec['steam-run'],
+			require => Windows::shortcut ['C:\Users\suomisim\Desktop\Steam.lnk'],
 	}
 
 }
